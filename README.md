@@ -2,9 +2,9 @@
 The Danny's Dinner SQL challenge is one of the most interesting challenges  I have participated in; I wonder why it took me this long to jump on it, which is why the solutions of these exercise made it to my repository! I will be translating business queries into insights using SQL. How interesting is that? Let's go! 
 
 ## Table of Contents
-* [Background](https://github.com/NUgonna/SQL-Challenge-Case-Study-Dannys-Diner/edit/main/README.md#background)
-* [Problem Statement](https://github.com/NUgonna/SQL-Challenge-Case-Study-Dannys-Diner/edit/main/README.md#problem-statement)
-* [Database Schema and Tables](https://github.com/NUgonna/SQL-Challenge-Case-Study-Dannys-Diner/edit/main/README.md#database-design-schema-and-tables)
+* Background
+* Problem Statement
+* Database Schema and Tables
 * [Case Study Questions and SQL Solutions](https://github.com/NUgonna/SQL-Challenge-Case-Study-Dannys-Diner/blob/main/Case%20Study%20Questions%20and%20Solutions.md)
 
 ## Background 
