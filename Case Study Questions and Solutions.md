@@ -132,6 +132,8 @@ Customers A and C have **Ramen** has their most popular dish. Customer B doesn't
 
 ### 6. Which item was purchased first by the customer after they became a member ?
 
+** Steps:**
+ 
 * **Get all orders purchased after becoming a member**: Create a CTE called ```orders_after_membership ```. Select all relevant columns needed for your results,  **JOIN** tables ``` sales ``` and ``` members``` **ON** ``` customer_id``` and **JOIN** tables ``` menu``` and ``` sales```  **ON**  ``` product_id```. Then filter the table using the ``` WHERE``` clause to display results only when order dates are greater than the sign-up dates.
 *  **Rank orders after membership starting with the minimum order date**:  Create a CTE called **first_order** from ```orders_after_membership ``` temp table. Within the second CTE, create a new column called **first_orderr** using the ``` RANK()``` window function to rank ``` sales.customer_id ``` partition based on ``` sales.order_date in ascending order ```  . Get all the necessary columns from the ```orders_after_membership ``` table. _ ** Note: The RANK () function because a customer can order two different items on the same date (Note: the ```sales.orders_date ``` does not have a timestamp).**_
   
@@ -159,5 +161,45 @@ WHERE first_orderr = 1;
 | B	| sushi |	2021-01-11T00:00:00.000Z |
 
 Customer A purchased ramen after signing up for the membership, while B went for sushi. In conclusion, customers are likely to order either **ramen** or **sushi** after being members.
+
+### 7.Which item was purchased just before the customer became a member? 
+
+This question is the opposite of question 6.
+
+**Steps**
+
+* **Get all orders purchased before becoming a member**: Create a CTE called ```orders_before_membership ```. Select all relevant columns needed for your results,  **JOIN** tables ``` sales ``` and ``` members``` **ON** ``` customer_id``` and **JOIN** tables ``` menu``` and ``` sales```  **ON**  ``` product_id```. Then filter the table using the ``` WHERE``` clause to display results only when order dates are less than the sign-up dates.
+*  **Rank orders after membership starting with the maximum order date**:  Create a CTE called **last_item_before_membership** from ```orders_before_membership ``` temp table. Within the second CTE, create a new column called **last_order** using the ``` RANK()``` window function to rank ``` sales.customer_id ``` partition based on ``` sales.order_date in **descending order** ```  . Get all the necessary columns from the ```orders_after_membership ``` table. _ ** Note: The RANK () function because a customer can order two different items on the same date (Note: the ```sales.orders_date ``` does not have a timestamp).**_
+  
+*  **Filter the output of the second CTE using the ```WHERE ``` clause**: In the outer query, retrieve results from the ``` last_item_before_membership ``` CTE  where the ``` last_order ``` column equals 1.
+
+
+``` sql
+WITH orders_before_membership AS (
+  
+SELECT sales.customer_id, menu.product_name, sales.order_date
+ 
+FROM dannys_diner.sales 
+JOIN dannys_diner.members ON sales.customer_id = members.customer_id
+JOIN dannys_diner.menu ON sales.product_id = menu.product_id
+WHERE sales.order_date < members.join_date
+
+),  
+last_item_before_membership AS 
+ (
+SELECT 
+RANK () OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS last_order, customer_id, product_name, order_date FROM orders_before_membership
+) 
+SELECT customer_id, product_name, order_date FROM last_item_before_membership
+WHERE last_order = 1;
+```
+ 
+| customer_id |	product_name |	order_date |
+|--------------|-------------|------------|
+| A	| sushi |	2021-01-01T00:00:00.000Z |
+| A	| curry |	2021-01-01T00:00:00.000Z |
+| B	 |sushi |	2021-01-04T00:00:00.000Z |
+
+Sushi and curry were the last items purchased by Customer A before signing up for membership, while sushi was the last item purchased by customer B.
 
 
