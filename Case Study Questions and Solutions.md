@@ -193,7 +193,8 @@ RANK () OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS last_order, 
 SELECT customer_id, product_name, order_date FROM last_item_before_membership
 WHERE last_order = 1;
 ```
- 
+**Final Result**
+
 | customer_id |	product_name |	order_date |
 |--------------|-------------|------------|
 | A	| sushi |	2021-01-01T00:00:00.000Z |
@@ -201,5 +202,90 @@ WHERE last_order = 1;
 | B	 |sushi |	2021-01-04T00:00:00.000Z |
 
 Sushi and curry were the last items purchased by Customer A before signing up for membership, while sushi was the last item purchased by customer B.
+
+### 8.   What is the total items and amount spent for each member before they became a member?
+**Steps**
+
+``` sql
+
+```
+
+### 9.   If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+
+**Steps**
+*This question allows you to apply conditions to the amount spent by each customer. The ``` CASE () ``` clause will be of help*  To approach this question, 3 fields are needed from two tables. The ``` sales.customer_id ```,  ``` menu.product_name ``` and the ``` menu.price ``` fields are used to achieve the solution.
+
+   * Select the appropriate fields from the ``` sales ```. To get the points for each customer, apply the conditional expression ``` CASE ``` into the ``` SUM () ``` function. This line of code returns the total points spent by a customer.
+   * Use the ``` JOIN ```clause to combine tables ``` sales ``` and ``` menu ```. This join happens on a common field (primary and foreign key) that both tables have, this key is ``` product_id ```. Without the join, I will get into trouble for using the ``` menu.product_name ``` and the ``` menu.price ``` fields from the ``` menu ``` table; hahaha.
+   * Group the calculated total points by ``` sales.customer_id ```.
+   * Order the output generated from the above step by the newly created field  ``` points ``
+         
+``` sql
+ SELECT sales.customer_id,
+SUM 
+(
+CASE 
+WHEN menu.product_name = 'curry' THEN menu.price * 10 
+WHEN menu.product_name = 'ramen' THEN menu.price * 10 
+WHEN menu.product_name = 'sushi' THEN menu.price * 20 
+ELSE 0
+END
+) AS points
+FROM 
+dannys_diner.sales  JOIN  dannys_diner.menu ON  sales.product_id = menu.product_id
+GROUP BY sales.customer_id
+ORDER BY points DESC;
+
+```
+
+**Final Result**
+
+| customer_id |	points |
+|-------------|--------| 
+| B	 | 940 |
+| A	 | 860 |
+| C	 | 360 |
+
+Customer B has the highest points with a total of 940 points, followed by customer A with a total of 860 and finally, customer C with a total of 360 points.
+
+### 10.   In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
+**Steps:**
+_To approach this question, a total of 5 fields from the three tables are needed to effectively carry out the task. The ``` sales.customer_id ```,  ``` menu.product_name ```,``` members.join_date ```, ``` sales.order_date ``` and  menu.price ``` fields are used to achieve the solution._
+
+* Select the appropriate fields from the ``` sales ```. To get the points for each customer, apply the conditional expression ``` CASE ``` into the ``` SUM () ``` function. This line of code returns the total points gotten by a before and after being a member. If you notice, in the first week of being a member, every item bought has been multiplied by 20: ```WHEN sales.order_date BETWEEN members.join_date AND members.join_date + INTERVAL '6 days' THEN menu.price * 20 ```
+* Use the ``` JOIN ```clause to combine tables ``` sales ```, ``` members `` and ``` menu ```. The ``` sales `` table joins on these two tables on ``` customer_id`` and ``` product_id ``` respectively.
+* Utilize the ``` WHERE `` clause to filter orders belonging to Customer A and B and order dates are in January.
+* Group the result set using the ``` sales.customer_id ``` field and order the result by the newly created column ```points ```
+
+``` sql
+SELECT sales.customer_id, 
+SUM 
+(
+CASE 
+WHEN sales.order_date BETWEEN members.join_date AND members.join_date + INTERVAL '6 days' THEN menu.price * 20 
+WHEN menu.product_name = 'sushi' THEN menu.price *20
+ELSE 
+menu.price * 10  
+END
+) AS points FROM dannys_diner.sales 
+
+JOIN dannys_diner.members ON sales.customer_id = members.customer_id
+JOIN dannys_diner.menu ON sales.product_id = menu.product_id
+ WHERE sales.customer_id in ('A','B') AND sales.order_date BETWEEN
+'2021-01-01' AND '2021-01-31'
+GROUP BY sales.customer_id
+ORDER BY points;
+```
+**Final Result**
+
+| customer_id |	points |
+|-------------|--------| 
+| A	 | 1370 |
+| B  | 820 |
+
+Customer A has the highest points with a total of 1370 in the month of January and Customer B has 820 points in January.
+
+
 
 
