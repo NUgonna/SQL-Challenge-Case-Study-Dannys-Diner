@@ -54,8 +54,9 @@ A and B have visited the store 6 days, and C has visited 3 days.
 ``` sql
 WITH first_order AS
 (
-SELECT RANK() OVER (PARTITION BY sales.customer_id ORDER BY sales.order_date) AS order_rank, sales.customer_id, menu.product_name, sales.order_date
- FROM dannys_diner.sales
+SELECT RANK() OVER (PARTITION BY sales.customer_id ORDER BY sales.order_date) AS order_rank,
+sales.customer_id, menu.product_name, sales.order_date
+FROM dannys_diner.sales
  JOIN dannys_diner.menu ON sales.product_id = menu.product_id
  )
  SELECT customer_id, product_name, order_date from first_order
