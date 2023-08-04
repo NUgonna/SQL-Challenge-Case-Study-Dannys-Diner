@@ -59,7 +59,7 @@ sales.customer_id, menu.product_name, sales.order_date
 FROM dannys_diner.sales
  JOIN dannys_diner.menu ON sales.product_id = menu.product_id
  )
- SELECT customer_id, product_name, order_date from first_order
+ SELECT customer_id, product_name, order_date FROM first_order
  WHERE order_rank = 1
  GROUP BY customer_id, product_name, order_date;
 ```
