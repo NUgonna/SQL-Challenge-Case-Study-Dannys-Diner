@@ -139,7 +139,7 @@ Customers A and C have **Ramen** has their most popular dish. Customer B doesn't
 * **Get all orders purchased after becoming a member**: Create a CTE called ```orders_after_membership ```. Select all relevant columns needed for your results,  **JOIN** tables ``` sales ``` and ``` members``` **ON** ``` customer_id``` and **JOIN** tables ``` menu``` and ``` sales```  **ON**  ``` product_id```. Then filter the table using the ``` WHERE``` clause to display results only when order dates are greater than the sign-up dates.
 *  **Rank orders after membership starting with the minimum order date**:  Create a CTE called **first_order** from ```orders_after_membership ``` temp table. Within the second CTE, create a new column called **first_orderr** using the ``` RANK()``` window function to rank ``` sales.customer_id ``` partition based on ``` sales.order_date in ascending order ```  . Get all the necessary columns from the ```orders_after_membership ``` table. _ ** Note: The RANK () function because a customer can order two different items on the same date (Note: the ```sales.orders_date ``` does not have a timestamp).**_
   
-*  **Filter the output of the second CTE using the ```WHERE ``` clause**: In the outer query, retrieve results from the ``` first_order ``` CTE  where the rank equals 1. first_order
+*  **Filter the output of the second CTE using the ```WHERE ``` clause**: In the outer query, retrieve results from the ``` first_order ``` CTE  where the rank equals 1. 
 
 ``` sql
 WITH orders_after_membership AS (
