@@ -110,7 +110,8 @@ The most purchased item is Ramen.
 WITH popular_orders AS
 (
 SELECT 
-RANK() OVER (PARTITION BY sales.customer_id ORDER BY COUNT(sales.product_id) DESC) AS SN, COUNT(sales.product_id) AS number_of_orders, sales.customer_id,menu.product_name
+RANK() OVER (PARTITION BY sales.customer_id ORDER BY COUNT(sales.product_id) DESC) AS SN, COUNT(sales.product_id) AS number_of_orders,
+sales.customer_id,menu.product_name
  
 FROM dannys_diner.sales
 JOIN dannys_diner.menu ON sales.product_id = menu.product_id
