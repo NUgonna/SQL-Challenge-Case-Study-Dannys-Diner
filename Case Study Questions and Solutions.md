@@ -150,7 +150,8 @@ WHERE s.order_date > DATE(e.join_date)
 ),
 
 first_order AS (
-SELECT RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS first_orderr, customer_id, product_name, order_date FROM orders_after_membership
+SELECT RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS first_orderr, customer_id,
+product_name, order_date FROM orders_after_membership
  )
 SELECT customer_id, product_name, order_date FROM first_order
 WHERE first_orderr = 1;
