@@ -207,12 +207,35 @@ WHERE last_order = 1;
 
 Sushi and curry were the last items purchased by Customer A before signing up for membership, while sushi was the last item purchased by customer B.
 
-### 8.   What is the total items and amount spent for each member before they became a member?
+### 8.   What is the total items and amount spent by each member before they became a member?
+
 **Steps**
 
+* Retrieve the ```sales.customer_id ```, count the number of total items by utilising the COUNT() function on the ```sales.product_id ``` field (this is aliased by total_items), and calculate the amount spent by each customer by utilizing the SUM() function on ```menu.price ``` (this is aliased by total_amount) from ```dannys_diner.sales```.
+* Then, join the ```dannys_diner.members``` on  ``` sales.customer_id = members.customer_id```. Just a quick reminder: From the schema, the ```customer_id ``` is a unique identifier that the ```sales `` and the ```members``` table have in common.
+* Also, join ```dannys_diner.menu ``` ON ```sales.product_id = menu.product_id ```.
+* I am only interested in the period where a customer's order date is before the date they registered as a member, so, ```WHERE sales.order_date < members.join_date ```
+* Then, group the result set by ``` sales.customer_id``` and order the result set by the total_amount alias. ```(GROUP BY sales.customer_id
+ORDER BY total_amount) ```
+
 ``` sql
+SELECT sales.customer_id AS customer, COUNT(sales.product_id) AS total_items,  
+SUM(menu.price) total_amount FROM dannys_diner.sales 
+INNER JOIN dannys_diner.members ON sales.customer_id = members.customer_id
+INNER JOIN dannys_diner.menu ON sales.product_id = menu.product_id
+WHERE sales.order_date < members.join_date
+GROUP BY sales.customer_id
+ORDER BY total_amount;
 
 ```
+**Final Result**
+
+| customer |	total_items |	total_amount |
+|--------------|-------------|------------|
+| A	| 2 |	25 |
+| B	| 3 |	40|
+
+Prior to attaining the membership status,customer A made 3 purchases and spent $25 (this is inclusive of duplicate purchases of same item), customer B made 3 purchases and spent a total of $40.  
 
 ### 9.   If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
