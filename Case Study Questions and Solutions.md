@@ -191,7 +191,8 @@ WHERE sales.order_date < members.join_date
 last_item_before_membership AS 
  (
 SELECT 
-RANK () OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS last_order, customer_id, product_name, order_date FROM orders_before_membership
+RANK () OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS last_order, customer_id,
+product_name, order_date FROM orders_before_membership
 ) 
 SELECT customer_id, product_name, order_date FROM last_item_before_membership
 WHERE last_order = 1;
