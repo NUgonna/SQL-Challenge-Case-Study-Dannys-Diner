@@ -4,7 +4,7 @@
 
  **Solution steps**:
  * The ``` price ``` field from the ``` menu ``` table and the ``` customer_id ``` field from the ``` sales ``` table are the important fields for this.
- * Retrieve the ``` customer_id ``` and use an aggregate function ``` SUM() ``` on the ``` price ``` field, and then join the ``` sales ``` table and the ``` menu ``` table. If you notice, the sales table has a foreign key called ``` product_id ```, which is a primary key in the ``` menu ``` table. The relationship between the two tables lies with this unique identifier, so the join is done on ``` product_id ```.
+ * Retrieve the ``` customer_id ``` and use an aggregate function ``` SUM() ``` on the ``` price ``` field, and then join the ``` sales ``` table and the ``` menu ``` table. If you notice, the sales table has a foreign key called ``` product_id ```, which is a primary key in the ``` menu ``` table. The relationship between the two tables lies with this unique identifier, so the join is done on ``` product_id ```. 
  * To get the total spend for each customer, use the GROUP BY clause to group the result set from step 1 and 2 above based on the names of the customers, which is ``` customer_id ``` and order the total amount in descending order.
  
   ``` sql
