@@ -216,8 +216,9 @@ Sushi and curry were the last items purchased by Customer A before signing up fo
 
 ### 9.   If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
-**Steps**
-*This question allows you to apply conditions to the amount spent by each customer. The ``` CASE () ``` clause will be of help*  To approach this question, 3 fields are needed from two tables. The ``` sales.customer_id ```,  ``` menu.product_name ``` and the ``` menu.price ``` fields are used to achieve the solution.
+**Steps**:
+
+*Note: This question allows you to apply conditions to the amount spent by each customer. The ``` CASE () ``` clause will be of help*  To approach this question, 3 fields are needed from two tables. The ``` sales.customer_id ```,  ``` menu.product_name ``` and the ``` menu.price ``` fields are used to achieve the solution.
 
    * Select the appropriate fields from the ``` sales ```. To get the points for each customer, apply the conditional expression ``` CASE ``` into the ``` SUM () ``` function. This line of code returns the total points spent by a customer.
    * Use the ``` JOIN ```clause to combine tables ``` sales ``` and ``` menu ```. This join happens on a common field (primary and foreign key) that both tables have, this key is ``` product_id ```. Without the join, I will get into trouble for using the ``` menu.product_name ``` and the ``` menu.price ``` fields from the ``` menu ``` table; hahaha.
