@@ -258,9 +258,9 @@ Customer B has the highest points with a total of 940 points, followed by custom
 **Steps:**
 _To approach this question, a total of 5 fields from the three tables are needed to effectively carry out the task. The ``` sales.customer_id ```,  ``` menu.product_name ```,``` members.join_date ```, ``` sales.order_date ``` and  menu.price ``` fields are used to achieve the solution._
 
-* Select the appropriate fields from the ``` sales ```. To get the points for each customer, apply the conditional expression ``` CASE ``` into the ``` SUM () ``` function. This line of code returns the total points gotten by a before and after being a member. If you notice, in the first week of being a member, every item bought has been multiplied by 20: ```WHEN sales.order_date BETWEEN members.join_date AND members.join_date + INTERVAL '6 days' THEN menu.price * 20 ```
-* Use the ``` JOIN ```clause to combine tables ``` sales ```, ``` members `` and ``` menu ```. The ``` sales `` table joins on these two tables on ``` customer_id`` and ``` product_id ``` respectively.
-* Utilize the ``` WHERE `` clause to filter orders belonging to Customer A and B and order dates are in January.
+* Select the appropriate fields from the ``` sales ```. To get the points for each customer, apply the conditional expression ``` CASE ``` into the ``` SUM () ``` function. This line of code returns the total points gotten by a customer before and after being a member. If you notice, in the first week of being a member, every item bought has been multiplied by 20: ```WHEN sales.order_date BETWEEN members.join_date AND members.join_date + INTERVAL '6 days' THEN menu.price * 20 ```
+* Use the ``` JOIN ```clause to combine tables ``` sales ```, ``` members ``` and ``` menu ```. The ``` sales `` table joins on these two tables on ``` customer_id`` and ``` product_id ``` respectively.
+* Utilize the ``` WHERE ``` clause to filter orders belonging to Customer A and B and where order dates are in January.
 * Group the result set using the ``` sales.customer_id ``` field and order the result by the newly created column ```points ```
 
 ``` sql
