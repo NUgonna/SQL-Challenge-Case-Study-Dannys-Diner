@@ -17,11 +17,11 @@
 **Final Result**
 | customer_id | total_spend |
 |--------------|-------------|
-| A | 110|
+| A | 100|
 | B | 74|
 | C | 46 |
 
-Customer A has spent more money in the restaurant more than any other customer with a total of $110, followed by customer B with a total of $74 and C with the least total spend of $46.
+Customer A has spent more money in the restaurant more than any other customer with a total of $100, followed by customer B with a total of $74 and C with the least total spend of $46.
 
 ### Q2. How many days has each customer visited the restaurant? 
 
@@ -270,11 +270,11 @@ ORDER BY points DESC;
 
 | customer_id |	points |
 |-------------|--------| 
+| A	 | 1100 |
 | B	 | 940 |
-| A	 | 860 |
-| C	 | 360 |
+| C	 | 560 |
 
-Customer B has the highest points with a total of 940 points, followed by customer A with a total of 860 and finally, customer C with a total of 360 points.
+Customer A has the highest points with a total of 1100 points, followed by customer B with a total of 940 and finally, customer C with a total of 560 points.
 
 ### 10.   In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
@@ -309,10 +309,10 @@ ORDER BY points;
 
 | customer_id |	points |
 |-------------|--------| 
-| A	 | 1370 |
-| B  | 820 |
+| B	 | 820 |
+| A  | 1610 |
 
-Customer A has the highest points with a total of 1370 in the month of January and Customer B has 820 points in January.
+Customer A has the highest points with a total of 1610 in the month of January 2021 and Customer B has 820 points in January 2021.
 
 
 
