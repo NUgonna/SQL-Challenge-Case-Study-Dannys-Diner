@@ -235,7 +235,7 @@ ORDER BY total_amount;
 | A	| 2 |	25 |
 | B	| 3 |	40|
 
-Prior to attaining the membership status,customer A made 3 purchases and spent $25 (this is inclusive of duplicate purchases of same item), customer B made 3 purchases and spent a total of $40.  
+Prior to attaining the membership status,customer A made 2 purchases and spent $25 (this is inclusive of duplicate purchases of same item), customer B made 3 purchases and spent a total of $40.  
 
 ### 9.   If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
